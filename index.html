@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Página de checkout com preenchimento automático de endereço por CEP">
+    <title>Checkout - Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="bg-body-tertiary">
+    <header class="bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Navegação principal">
+            <div class="container">
+                <a class="navbar-brand fw-semibold" href="#">Logo</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Início</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Sobre</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">GitHub</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container my-5">
+        <div class="py-4 text-center">
+            <h1 class="h2 text-primary">Checkout</h1>
+            <p class="lead mb-0">Digite seu CEP para preencher o endereço automaticamente.</p>
+        </div>
+
+        <div class="row g-5">
+            <aside class="col-md-5 col-lg-4 order-md-last">
+                <h2 class="h4 d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-primary">Seu carrinho</span>
+                    <span class="badge bg-primary rounded-pill">3</span>
+                </h2>
+                <ul class="list-group mb-3 shadow-sm">
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div>
+                            <h3 class="h6 my-0">Produto principal</h3>
+                            <small class="text-body-secondary">Descrição breve</small>
+                        </div>
+                        <span class="text-body-secondary">R$ 120,00</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div>
+                            <h3 class="h6 my-0">Segundo produto</h3>
+                            <small class="text-body-secondary">Descrição breve</small>
+                        </div>
+                        <span class="text-body-secondary">R$ 80,00</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div>
+                            <h3 class="h6 my-0">Terceiro item</h3>
+                            <small class="text-body-secondary">Descrição breve</small>
+                        </div>
+                        <span class="text-body-secondary">R$ 50,00</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
+                        <div class="text-success">
+                            <h3 class="h6 my-0">Cupom</h3>
+                            <small>thiaguinho</small>
+                        </div>
+                        <span class="text-success">− R$ 50,00</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total</span>
+                        <strong>R$ 200,00</strong>
+                    </li>
+                </ul>
+
+                <form class="card p-2 shadow-sm">
+                    <div class="input-group">
+                        <label class="visually-hidden" for="promoCode">Cupom promocional</label>
+                        <input type="text" class="form-control" id="promoCode" placeholder="Cupom promocional">
+                        <button type="submit" class="btn btn-secondary">Aplicar</button>
+                    </div>
+                </form>
+            </aside>
+
+            <section class="col-md-7 col-lg-8">
+                <h2 class="h4 mb-3">Endereço de cobrança</h2>
+                <form id="checkoutForm" class="needs-validation" novalidate>
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="firstName" class="form-label">Nome</label>
+                            <input type="text" class="form-control" id="firstName" autocomplete="given-name" required>
+                            <div class="invalid-feedback">Informe seu nome.</div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="lastName" class="form-label">Sobrenome</label>
+                            <input type="text" class="form-control" id="lastName" autocomplete="family-name" required>
+                            <div class="invalid-feedback">Informe seu sobrenome.</div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="username" class="form-label">Usuário</label>
+                            <div class="input-group has-validation">
+                                <span class="input-group-text">@</span>
+                                <input type="text" class="form-control" id="username" autocomplete="username" required>
+                                <div class="invalid-feedback">Informe seu usuário.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="email" class="form-label">Email <span class="text-body-secondary">(opcional)</span></label>
+                            <input type="email" class="form-control" id="email" placeholder="voce@exemplo.com" autocomplete="email">
+                            <div class="invalid-feedback">Informe um email válido.</div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="cep" class="form-label">CEP</label>
+                            <div class="input-group has-validation">
+                                <input type="text" class="form-control" id="cep" name="cep" placeholder="00000000" inputmode="numeric" autocomplete="postal-code" minlength="8" pattern="[0-9]{8}" required aria-describedby="cepHelp cepFeedback">
+                                <span class="input-group-text d-none" id="cepSpinner">
+                                    <span class="spinner-border spinner-border-sm text-primary" role="status" aria-label="Buscando endereço"></span>
+                                </span>
+                                <div id="cepFeedback" class="invalid-feedback" aria-live="polite">Informe um CEP com 8 dígitos.</div>
+                            </div>
+                            <div id="cepHelp" class="form-text">Digite apenas números.</div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <label for="logradouro" class="form-label">Logradouro</label>
+                            <input type="text" class="form-control" id="logradouro" name="logradouro" autocomplete="address-line1" required>
+                            <div class="invalid-feedback">Informe o logradouro.</div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <label for="numero" class="form-label">Número</label>
+                            <input type="text" class="form-control" id="numero" name="numero" autocomplete="address-line2" required>
+                            <div class="invalid-feedback">Informe o número.</div>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <label for="complemento" class="form-label">Complemento <span class="text-body-secondary">(opcional)</span></label>
+                            <input type="text" class="form-control" id="complemento" name="complemento" placeholder="Apartamento, bloco, referência">
+                        </div>
+
+                        <div class="col-md-5">
+                            <label for="bairro" class="form-label">Bairro</label>
+                            <input type="text" class="form-control" id="bairro" name="bairro" autocomplete="address-level3" required>
+                            <div class="invalid-feedback">Informe o bairro.</div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <label for="cidade" class="form-label">Cidade</label>
+                            <input type="text" class="form-control" id="cidade" name="cidade" autocomplete="address-level2" required>
+                            <div class="invalid-feedback">Informe a cidade.</div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="estado" class="form-label">UF</label>
+                            <input type="text" class="form-control text-uppercase" id="estado" name="estado" autocomplete="address-level1" maxlength="2" pattern="[A-Z]{2}" required>
+                            <div class="invalid-feedback">Informe a UF.</div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="pais" class="form-label">País</label>
+                            <input type="text" class="form-control" id="pais" name="pais" value="Brasil" readonly required>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="sameAddress">
+                        <label class="form-check-label" for="sameAddress">O endereço de entrega é o mesmo de cobrança</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="saveInfo">
+                        <label class="form-check-label" for="saveInfo">Salvar essas informações para a próxima compra</label>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <h2 class="h4 mb-3">Pagamento</h2>
+
+                    <div class="my-3">
+                        <div class="form-check">
+                            <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+                            <label class="form-check-label" for="credit">Cartão de crédito</label>
+                        </div>
+                        <div class="form-check">
+                            <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
+                            <label class="form-check-label" for="debit">Cartão de débito</label>
+                        </div>
+                        <div class="form-check">
+                            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
+                            <label class="form-check-label" for="paypal">PayPal</label>
+                        </div>
+                    </div>
+
+                    <div class="row gy-3">
+                        <div class="col-md-6">
+                            <label for="ccName" class="form-label">Nome no cartão</label>
+                            <input type="text" class="form-control" id="ccName" autocomplete="cc-name" required>
+                            <small class="text-body-secondary">Nome completo como aparece no cartão</small>
+                            <div class="invalid-feedback">Informe o nome do cartão.</div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="ccNumber" class="form-label">Número do cartão</label>
+                            <input type="text" class="form-control" id="ccNumber" inputmode="numeric" autocomplete="cc-number" required>
+                            <div class="invalid-feedback">Informe o número do cartão.</div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="ccExpiration" class="form-label">Validade</label>
+                            <input type="text" class="form-control" id="ccExpiration" placeholder="MM/AA" autocomplete="cc-exp" required>
+                            <div class="invalid-feedback">Informe a validade.</div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="ccCvv" class="form-label">CVV</label>
+                            <input type="text" class="form-control" id="ccCvv" inputmode="numeric" autocomplete="cc-csc" required>
+                            <div class="invalid-feedback">Informe o código de segurança.</div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <button id="checkoutButton" class="w-100 btn btn-primary btn-lg" type="submit">Continuar para pagamento</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <footer class="my-5 pt-5 text-body-secondary text-center text-small">
+        <p class="mb-1">© 2026 Test</p>
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="#">Privacy</a></li>
+            <li class="list-inline-item"><a href="#">Terms</a></li>
+            <li class="list-inline-item"><a href="#">Support</a></li>
+        </ul>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script>
+        (() => {
+            'use strict';
+
+            const checkoutForm = document.querySelector('#checkoutForm');
+            const checkoutButton = document.querySelector('#checkoutButton');
+            const cepInput = document.querySelector('#cep');
+            const cepFeedback = document.querySelector('#cepFeedback');
+            const cepSpinner = document.querySelector('#cepSpinner');
+            const logradouroInput = document.querySelector('#logradouro');
+            const bairroInput = document.querySelector('#bairro');
+            const cidadeInput = document.querySelector('#cidade');
+            const estadoInput = document.querySelector('#estado');
+            const numeroInput = document.querySelector('#numero');
+            const complementoInput = document.querySelector('#complemento');
+            const apiAddressInputs = [logradouroInput, bairroInput, cidadeInput, estadoInput];
+            const allAddressInputs = [...apiAddressInputs, numeroInput, complementoInput];
+
+            let activeController = null;
+            let pendingCep = '';
+            let lastSuccessfulCep = '';
+
+            const normalizeCep = (value) => value.replace(/\D/g, '').slice(0, 8);
+
+            const setCityStateReadonly = (isReadonly) => {
+                cidadeInput.readOnly = isReadonly;
+                estadoInput.readOnly = isReadonly;
+            };
+
+            const clearAddressFields = ({ includeManualFields = true } = {}) => {
+                const inputsToClear = includeManualFields ? allAddressInputs : apiAddressInputs;
+
+                inputsToClear.forEach((input) => {
+                    input.value = '';
+                    input.classList.remove('is-valid', 'is-invalid');
+                });
+
+                setCityStateReadonly(false);
+            };
+
+            const clearCepFeedback = () => {
+                cepInput.setCustomValidity('');
+                cepInput.classList.remove('is-invalid', 'is-valid');
+                cepFeedback.textContent = 'Informe um CEP com 8 dígitos.';
+            };
+
+            const showCepError = (message) => {
+                cepInput.setCustomValidity(message);
+                cepInput.classList.remove('is-valid');
+                cepInput.classList.add('is-invalid');
+                cepFeedback.textContent = message;
+            };
+
+            const setLoadingState = (isLoading) => {
+                cepSpinner.classList.toggle('d-none', !isLoading);
+                cepInput.setAttribute('aria-busy', String(isLoading));
+                checkoutButton.disabled = isLoading;
+            };
+
+            const fillAddressFields = (address) => {
+                logradouroInput.value = address.street || '';
+                bairroInput.value = address.neighborhood || '';
+                cidadeInput.value = address.city || '';
+                estadoInput.value = address.state || '';
+                setCityStateReadonly(Boolean(address.city && address.state));
+            };
+
+            const abortActiveRequest = () => {
+                if (activeController) {
+                    activeController.abort();
+                    activeController = null;
+                    pendingCep = '';
+                    setLoadingState(false);
+                }
+            };
+
+            const searchCep = async (cep) => {
+                if (cep.length !== 8) {
+                    clearAddressFields();
+                    showCepError('Formato de CEP inválido. Use 8 dígitos.');
+                    return;
+                }
+
+                if (cep === pendingCep || (cep === lastSuccessfulCep && cepInput.classList.contains('is-valid'))) {
+                    return;
+                }
+
+                abortActiveRequest();
+                clearCepFeedback();
+
+                const controller = new AbortController();
+                activeController = controller;
+                pendingCep = cep;
+                setLoadingState(true);
+
+                try {
+                    const response = await fetch(`https://brasilapi.com.br/api/cep/v2/${cep}`, {
+                        signal: controller.signal,
+                    });
+
+                    if (!response.ok) {
+                        if (response.status === 400) {
+                            throw new Error('Formato de CEP inválido.');
+                        }
+
+                        if (response.status === 404) {
+                            throw new Error('CEP não encontrado.');
+                        }
+
+                        throw new Error('Não foi possível buscar o CEP agora.');
+                    }
+
+                    const address = await response.json();
+
+                    if (cep !== lastSuccessfulCep) {
+                        numeroInput.value = '';
+                        complementoInput.value = '';
+                    }
+
+                    fillAddressFields(address);
+                    cepInput.value = normalizeCep(address.cep || cep);
+                    cepInput.setCustomValidity('');
+                    cepInput.classList.remove('is-invalid');
+                    cepInput.classList.add('is-valid');
+                    cepFeedback.textContent = 'Endereço encontrado.';
+                    lastSuccessfulCep = cep;
+                    numeroInput.focus();
+                } catch (error) {
+                    if (error.name === 'AbortError') {
+                        return;
+                    }
+
+                    lastSuccessfulCep = '';
+                    clearAddressFields();
+                    showCepError(error.message || 'CEP não encontrado.');
+                } finally {
+                    if (activeController === controller) {
+                        activeController = null;
+                        pendingCep = '';
+                        setLoadingState(false);
+                    }
+                }
+            };
+
+            cepInput.addEventListener('input', () => {
+                const normalizedCep = normalizeCep(cepInput.value);
+                cepInput.value = normalizedCep;
+
+                if (normalizedCep !== lastSuccessfulCep) {
+                    clearCepFeedback();
+                    clearAddressFields({ includeManualFields: false });
+                }
+
+                if (normalizedCep.length < 8) {
+                    abortActiveRequest();
+                    return;
+                }
+
+                searchCep(normalizedCep);
+            });
+
+            cepInput.addEventListener('blur', () => {
+                const normalizedCep = normalizeCep(cepInput.value);
+                cepInput.value = normalizedCep;
+
+                if (!normalizedCep) {
+                    abortActiveRequest();
+                    clearCepFeedback();
+                    clearAddressFields();
+                    return;
+                }
+
+                searchCep(normalizedCep);
+            });
+
+            estadoInput.addEventListener('input', () => {
+                estadoInput.value = estadoInput.value.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 2);
+            });
+
+            checkoutForm.addEventListener('submit', (event) => {
+                if (!checkoutForm.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                checkoutForm.classList.add('was-validated');
+            });
+        })();
+    </script>
+</body>
+</html>
