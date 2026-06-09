@@ -3,6 +3,7 @@
   box-sizing: content-box;
 }
 
-.a {
+a {
     text-decoration: none;
+    color: gray;
 }
